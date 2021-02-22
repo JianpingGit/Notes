@@ -1,0 +1,66 @@
+
+一、XML介绍
+XML 指可扩展标记语言（EXtensible Markup Language）
+XML 是一种标记语言，很类似 HTML
+XML 的设计宗旨是传输数据，而非显示数据
+XML 标签没有被预定义。您需要自行定义标签。
+XML 被设计为具有自我描述性。
+XML 是 W3C 的推荐标准
+XML 应用于 web 开发的许多方面，常用于简化数据的存储和共享。
+
+二、XML语法介绍
+1、声明：<?xml version="1.0" encoding="GB2312"  standalone="yes" ?>
+
+2：Xml文件中的注释采用： <!--注释--> 格式。
+
+3、在编写XML文件时，有些内容可能不想让解析引擎解析执行，而是当作原始内容处理，遇到此种情况，可以把这些内容放在CDATA区里，对于CDATA区域内的内容，XML解析程序不会处理，而是直接原封不动的输出。
+　　语法：
+<![CDATA[       
+
+	内容           
+
+]]>
+
+4、对于一些单个字符，若想显示其原始样式，也可以使用转义的形式予以处理
+&		&amp;
+<		&lt;
+>		&gt;
+"			&quot;
+'			&apos;
+
+处理指令，简称PI （processing instruction）。处理指令用来指挥解析引擎如何解析XML文档内容。例如，在XML文档中可以使用xml-stylesheet指令，通知XML解析引擎，应用css文件显示xml文档内容，标签名为中文时，css不起作用。
+
+　　<?xml-stylesheet type="text/css" href="css文件名.css"?>
+
+　　例如：
+
+复制代码
+1 <?xml version="1.0" encoding="utf-8"?>
+2 <!--在XML文档中可以使用xml-stylesheet指令，通知XML解析引擎，应用country.css文件显示xml文档内容-->
+3 <?xml-stylesheet type="text/css" href="country.css"?>
+4 <Country>
+5     <c1>中国</c1>
+6     <c2>美国</c2>
+7     <c3>日本</c3>
+8     <c4>韩国</c4>
+9 </Country>
+
+　Country.css样式文件代码如下：
+
+ 1 c1{
+ 2     font-size:200px;
+ 3     color:red;
+ 4 }
+ 5 c2{
+ 6     font-size:150px;
+ 7     color:green;
+ 8 }
+ 9 c3{
+10     font-size:100px;
+11     color:#ccc;
+12 }
+13 c4{
+14     font-size:130px;
+15     color:blue;
+16 }
+复制代码

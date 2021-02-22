@@ -1,0 +1,92 @@
+
+excel文件过大，直接文件变成rar，打开查看xl->worksheets哪个sheet过大，然后找到这一页，选定，ctrl+"-"
+alt+F11可以查看未修改名字的sheet号
+
+datedif(date1,date2,"m") 两个日期的差值
+
+text(a1,"0.00") 把数字转换为文本
+
+
+
+多条件匹配：
+1、用countifs
+2、用vlookup(A&B,if({1,0},D&C,E),2,false)
+下拉列表的时候用ctrl+shift+enter
+
+
+计算指定还款期的本金
+ppmt (rate，per，nper，pv，fv，type)
+per，per表示目前处在第几个还款期，比如第1个月
+
+计算指定还款期的利息
+ipmt (rate，per，nper，pv，fv，type)
+per，per表示目前处在第几个还款期，比如第1个月
+
+pmt=ipmt+ppmt
+
+
+
+CUMPRINC(rate，nper，pv，start_period，end_period，type)
+返回两个付款期之间为贷款累积支付的本金
+
+CUMIPMT(rate,nper,pv,start_period,end_period,type)
+返回两个付款期之间累积支付的利息
+
+反向查询使用的方法：
+1、公式：=LOOKUP(1,0/($A$2A$696=F2),$C$2C$696)
+ 公式释义：$A$2A$696=F2得到的是False、True的序列，
+在Excel中，涉及到数学运算时，False=0，True=1，因此用0除后，
+得到的是#DIV/0!、0序列。注意：在Excel中，所有错误值不参与排序，不参与字符串的比较，
+或者说：错误值比所有的数值、字符串都要“大”。而公式的作用是在生成的#DIV/0!、0序列中找到小于或等于1的最大值，因为错误值不参与排序，因此只能找到0（也就是$A$2:$A$696=F2成立的地方！！！！并且只有一个！！！），然后返回相对应的$C$2:$C$696中的数值。
+
+ 
+2、公式：=VLOOKUP(A9,IF({1,0},B2:B5,A2:A5),2,0)
+ 
+    公式剖析：
+ 
+        1、这里其实不是VLOOKUP可以实现从右至右的查找，而是利用IF函数的数组效应把两列换位重新组合后，再按正常的从左至右查找。
+ 
+        2、IF（{1,0},B2:B5,A2:A5)这是本公式中最重要的组成部分。在EXCEL函数中使用数组时（前提时该函数的参数支持数组），返回的结果也会是一个数组。这里1和0不是实际意义上的数字，而是1相关于TRUE，0相当于FALSE，当为1时，它会返回IF的第二个参数（B列），为0时返回第二个参数（A列）。根据数组运算返回数组，所以使用IF后的结果返回一个数组（非单元格区域）：{"张一","A001";"赵三","A002";"杨五","A003";"孙二","A004"}
+
+3、MATCH(lookup_value,lookup_array,match_type)Lookup_value    
+为需要在数据表中查找的数值。Lookup_value 为需要在 Look_array 中查找的数值。例如，如果要在电话簿中查找某人的电话号码，则应该将姓名作为查找值，但实际上需要的是电话号码。 Lookup_value 可以为数值（数字、文本或逻辑值）或对数字、文本或逻辑值的单元格引用。 Lookup_array     可能包含所要查找的数值的连续单元格区域。Lookup_array 应为数组或数组引用。Match_type     为数字 -1、0 或 1。Match-type 指明 Microsoft Excel 如何在 lookup_array 中查找 lookup_value。如果 match_type 为 1，函数 MATCH 查找小于或等于 lookup_value 的最大数值。Lookup_array 必须按升序排列：...、-2、-1、0、1、2、...、A-Z、FALSE、TRUE。 如果 match_type 为 0，函数 MATCH 查找等于 lookup_value 的第一个数值。Lookup_array 可以按任何顺序排列。 如果 match_type 为 -1，函数 MATCH 查找大于或等于 lookup_value 的最小数值。Lookup_array 必须按降序排列：TRUE、FALSE、Z-A、...、2、1、0、-1、-2、...，等等。 如果省略 match_type，则假设为 1。 
+
+30、SUMIF函数　　
+
+函数名称：SUMIF　　
+
+主要功能：计算符合指定条件的单元格区域内的数值和。
+使用格式：SUMIF（Range,Criteria,Sum_Range）　
+参数说明：Range代表条件判断的单元格区域；Criteria为指定条件表达式；Sum_Range代表需要计算的数值所在的单元格区域。　　
+应用举例：如图7所示，在D64单元格中输入公式：=SUMIF(C2:C63,"男",D2:D63)，确认后即可求出“男”生的语文成绩和。　　
+特别提醒：如果把上述公式修改为：=SUMIF(C2:C63,"女",D2:D63)，即可求出“女”生的语文成绩和；其中“男”和“女”由于是文本型的，需要放在英文状态下的双引号（"男"、"女"）中。
+select week,count(distinct(dfim_id_number)) from sb$ group by week
+
+11、FREQUENCY函数　　
+
+函数名称：FREQUENCY
+主要功能：以一列垂直数组返回某个区域中数据的频率分布。
+使用格式：FREQUENCY(data_array,bins_array)参数说明：Data_array表示用来计算频率的一组数据或单元格区域；Bins_array表示为前面数组进行分隔一列数值。
+应用举例：如图2所示，同时选中B32至B36单元格区域，输入公式：=FREQUENCY(B2:B31,D2:D36)，输入完成后按下“Ctrl+Shift+Enter”组合键进行确认，即可求出B2至B31区域中，按D2至D36区域进行分隔的各段数值的出现频率数目
+
+计算连续非空单元格最大值
+=MAX(FREQUENCY(IF(B3:M3<>"",COLUMN(B3:M3)),IF(B3:M3="",COLUMN(B3:M3))))
+
+函数名称：DATEDIF　
+主要功能：计算返回两个日期参数的差值。
+使用格式：=DATEDIF(date1,date2,"y")、=DATEDIF(date1,date2,"m")、=DATEDIF(date1,date2,"d")
+参数说明：date1代表前面一个日期，date2代表后面一个日期；y（m、d）要求返回两个日期相差的年（月、天）数。应用举例：在C23单元格中输入公式：=DATEDIF(A23,TODAY(),"y")，确认后返回系统当前日期[用TODAY()表示）与A23单元格中日期的差值，并返回相差的年数。特别提醒：这是Excel中的一个隐藏函数，在函数向导中是找不到的，可以直接输入使用，对于计算年龄、工龄等非常有效。　
+
+5、CONCATENATE函数 　
+函数名称：CONCATENATE
+主要功能：将多个字符文本或单元格中的数据连接在一起，显示在一个单元格中。 　　
+使用格式：CONCATENATE(Text1，Text……) 　　
+参数说明：Text1、Text2……为需要连接的字符文本或引用的单元格。 　
+应用举例：在C14单元格中输入公式：=CONCATENATE(A14,"@",B14,".com")，确认后，即可将A14单元格中字符、@、B14单元格中的字符和.com连接成一个整体，显示在C14单元格中。
+特别提醒：如果参数不是引用的单元格，且为文本格式的，请给参数加上英文状态下的双引号，如果将上述公式改为：=A14&"@"&B14&".com"，也能达到相同的目的。　
+　
+
+Plan
+不重复计数=sumproduct(1/countif(a1:a100,a1:a100))
+sumproduct可实现数组乘积后的和
+=sumproduct(a1:a3,b1:b3)=a1*b1+a2*b2+a3*b3
