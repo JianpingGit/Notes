@@ -5,6 +5,8 @@
         * 1.1.1 perceptron
     * 1.2 nearest neighbors
         * 1.2.1 KNN 
+    * 1.3 decisive tree
+        - 1.3.1 Classification
 * 2 unspervised
     * 2.1 clustering
         * 2.1.1 K-means
@@ -55,7 +57,31 @@ knn.score(xTest,yTest)
 knn.predict(xTest)
 ```
 
+## 1.3 decisive tree
+### 1.3.1 Classification
+***
+原理简介
+> XXX
+> 
 
+### sklearn 实现  
+```python
+import matplotlib.pyplot as plt
+from sklearn.tree  import DecisionTreeClassifier
+from sklearn.datasets import load_iris
+from sklearn.model_selection import train_test_split
+
+X = load_iris()['data']
+Y = load_iris()['target']
+Xtrain,Xtest,Ytrain,Ytest = train_test_split(X,Y)
+clf = DecisionTreeClassifier() # criterion{“gini”, “entropy”}, default=”gini”
+clf.fit(Xtrain,Ytrain)
+
+clf.predict(Xtest)
+clf.score(Xtest,Ytest)
+clf.get_depth()
+clf.get_n_leaves()
+```
 
 # 2 Unsupervised
 ## 2.1 Clustering
